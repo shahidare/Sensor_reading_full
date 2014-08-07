@@ -17,6 +17,7 @@ long HCSR04::echo_duration() {
     trig = 1;
     wait_us(10);
     trig = 0;
+    wait_us(250);
     while(echo == 0);
     timer.start();
     while(echo == 1);
@@ -24,18 +25,13 @@ long HCSR04::echo_duration() {
     return timer.read_us();
 }
 
-//return distance to nearest obstacle or returns -1 
+//return distance to nearest obstacle or returns 255 in cm
 //if no obstacle within range
-//set sys to cm or inch accordingly
-long HCSR04::distance(int sys){
+int HCSR04::distance(){
     duration = echo_duration();
-    if(duration > 30000)
-        return -1;
+    if(duration > 14790)
+        return 255;
     distacne_cm = duration /29 / 2 ;
-    distance_inc = duration / 74 / 2;
-    if (sys)
-        return distacne_cm;
-    else
-        return distance_inc;
+    return distacne_cm;
 }
 
