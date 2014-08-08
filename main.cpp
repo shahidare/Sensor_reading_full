@@ -99,7 +99,7 @@ void ReadIr(){
         fIrReadingTemp[i]=0;
     }   
     int iSensorInfoAddress=3;
-    for(int i=0;i<5;i++){              // Converting integer to character to transfer bia bluetooth
+    for(int i=0;i<6;i++){              // Converting integer to character to transfer bia bluetooth
 		cSensorInfo[iSensorInfoAddress]=char(iIntPart[i]);
 		iSensorInfoAddress++;
 		cSensorInfo[iSensorInfoAddress]=char(iDeciPart[i]);
