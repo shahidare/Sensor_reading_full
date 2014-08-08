@@ -79,12 +79,12 @@ void ReadIr(){
     float fIrReadingTemp[6]={0,0,0,0,0,0};  //Temp variable to read the highest value of 100 readings
     int iIntPart[6],iDeciPart[6];           // Sends Ir sensor readings in two characters. First character will represent integer part and another character decimal part
     for(int i=0;i<100;i++){
-        fIrReading[0]=IR1.read()*3.3;  // Reads the analog value of IR and converts into voltage level
-        fIrReading[1]=IR2.read()*3.3;
-        fIrReading[2]=IR3.read()*3.3;
-        fIrReading[3]=IR4.read()*3.3;
-        fIrReading[4]=IR5.read()*3.3;
-        fIrReading[5]=IR6.read()*3.3;
+        fIrReading[0]=IR1.read();  // Reads the analog value of IR and converts into voltage level
+        fIrReading[1]=IR2.read();
+        fIrReading[2]=IR3.read();
+        fIrReading[3]=IR4.read();
+        fIrReading[4]=IR5.read();
+        fIrReading[5]=IR6.read();
         for(int j=0;j<6;j++){          // Comparing the previous highest value to new read data and updating highest
             if(fIrReadingTemp[j]<=fIrReading[j])
                 fIrReadingTemp[j]=fIrReading[j];
@@ -92,7 +92,7 @@ void ReadIr(){
         wait(0.125/100);
     }
     for(int i=0;i<6;i++){                // Converting float into interger part and decimal part and assigning to differnt variable
-        fIrReading[i]=fIrReadingTemp[i];
+        fIrReading[i]=fIrReadingTemp[i]*3.3;
         iIntPart[i]=int(fIrReading[i]);
         iDeciPart[i]=(fIrReading[i]-iIntPart[i])*100;   // To get precision upto two decimal.
         fIrReading[i]=0;
