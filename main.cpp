@@ -20,13 +20,13 @@
 #include "HCSR04.h"   //Standard Library for HCSR04 Ultrasonic sensor
 
 /*Following is brief explaination of HCSR04 library:                         
-First create the object HCSR04. To create object two variables are passed  
-First variable is pin number assigned for trigger of Ultrasonic sensor and 
-other variable is pin number assigned for echo of Ultrasonic sensor. For   
-example if pin 29 is assigned to trigger and 30 to echo pins of ultrasonic 
-sensor then "HCSR04 Sensor1(p29,p30)" Will create the object.              
-If HCSR04 object name is Sensor1 then Sensor1.distance(0) will give        
-distance in Inches and Sensor1.distance(1) will give distance in CM*/
+ First create the object HCSR04. To create object two variables are passed  
+ First variable is pin number assigned for trigger of Ultrasonic sensor and 
+ other variable is pin number assigned for echo of Ultrasonic sensor. For   
+ example if pin 29 is assigned to trigger and 30 to echo pins of ultrasonic 
+ sensor then "HCSR04 Sensor1(p29,p30)" Will create the object.              
+ If HCSR04 object name is Sensor1 then Sensor1.distance(0) will give        
+ distance in Inches and Sensor1.distance(1) will give distance in CM*/
 
 /*Prototypes*/
 void UpdateSensorInfo(void);    // UpdateSensorInfo function will read the sensor readings and update the information to be sent to the computer
@@ -71,7 +71,7 @@ void ReadUltrasonic(){
     cSensorInfo[0]=char(fLeft);
     cSensorInfo[1]=char(fCentral);
     cSensorInfo[2]=char(fRight);
-      
+	
 }
 
 void ReadIr(){
@@ -95,16 +95,18 @@ void ReadIr(){
         fIrReading[i]=fIrReadingTemp[i];
         iIntPart[i]=int(fIrReading[i]);
         iDeciPart[i]=(fIrReading[i]-iIntPart[i])*100;   // To get precision upto two decimal.
+        fIrReading[i]=0;
+        fIrReadingTemp[i]=0;
     }   
+    int iSensorInfoAddress=3;
     for(int i=0;i<5;i++){              // Converting integer to character to transfer bia bluetooth
-            int j=3;
-            cSensorInfo[j]=char(iIntPart[i]);
-            j++;
-            cSensorInfo[j]=char(iDeciPart[i]);
-            j++;
-            
-     }
-            
+		cSensorInfo[iSensorInfoAddress]=char(iIntPart[i]);
+		iSensorInfoAddress++;
+		cSensorInfo[iSensorInfoAddress]=char(iDeciPart[i]);
+		iSensorInfoAddress++;
+		
+    }
+	
 }   
 
 void UpdateSensorInfo(){  // Function calls ReadUltrasonic and ReadIr
